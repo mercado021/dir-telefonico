@@ -1,0 +1,28 @@
+Options All -Indexes
+AuthType Basic
+AuthName "Este directorio está protegido"
+#AuthUserFile /var/www/html/blog/files/.htpasswd
+#Require valid-user.
+
+<Files "edit.php">
+Require valid-user
+AuthType Basic
+AuthUserFile /var/www/html/blog/files/.htpasswd
+
+#ErrorDocument 401 http://directorio.sunset.com.mx
+ErrorDocument 401 /index.php
+</Files>
+
+<Files "medit.php">
+Require valid-user
+AuthType Basic
+AuthUserFile /var/www/html/blog/files/.htpasswd
+
+#ErrorDocument 401 http://directorio.sunset.com.mx
+ErrorDocument 401 /index.php
+</Files>
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php

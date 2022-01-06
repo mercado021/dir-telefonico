@@ -1,0 +1,9 @@
+Archivos a borrar/
+functions/archivos_a_borrar/agrega.php
+functions/archivos_a_borrar/conexion_dirtelefonico.php
+functions/archivos_a_borrar/delete.php
+functions/archivos_a_borrar/detalle.php
+functions/archivos_a_borrar/edit.php
+functions/archivos_a_borrar/funciones_dirtelefonico.php
+functions/archivos_a_borrar/insert.php
+functions/archivos_a_borrar/select.php
