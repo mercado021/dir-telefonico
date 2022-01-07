@@ -2,6 +2,65 @@
 
 //session_start();
 
+function lista_completa($filtro = NULL) {
+    require("conexion.php");
+    //echo 'Consulta SIN filtro<br>';
+    if ($filtro <> NULL) {
+        echo 'Consulta con filtro <br>' . $filtro . "<br>";
+        $consulta = "SELECT departamento, puesto, nombre, exten, telefono, locacion "
+                . "FROM dir_general "
+                . "WHERE departamento LIKE %'$filtro'% or Locacion like %'$filtro'%"
+                . "ORDER BY directorio.Locacion DESC";
+        echo $consulta;
+        echo mysqli_errno($conexion);
+    } 
+    else {
+        $consulta = "SELECT departamento, puesto, nombre, exten, telefono, locacion "
+                . "FROM dir_general "
+                . "ORDER BY Locacion DESC";
+
+        //echo "<br><br> $consulta <br><br>";
+    }
+    $resultado = mysqli_query($conexion, $consulta);
+    if ($resultado == false) {
+        # code...
+        echo "No se ejecutó la consulta <br>";
+        echo mysqli_errno($conexion);
+    } else {
+        $countfilas = 0;
+        echo '<table class="table table-striped table-hover" id="id01">';
+        echo '</thead>';
+        echo "<tr>";
+        //echo '<th>Id</th>';
+        echo '<th>Locación</th>';
+        echo '<th>Departamento</th>';
+        echo '<th>Puesto</th>';
+        echo '<th>Nombre</th>';
+        echo '<th>Ext</th>';
+        echo '<th>Telefono</th>';
+        
+        //echo "<th>Complejo</th>";
+        echo '</thead>';
+        echo "</tr><tbody>";
+        
+        while (($fila = mysqli_fetch_array($resultado, MYSQL_ASSOC)) == true) {
+            $countfilas++;
+            echo '<tr class="item">';
+            //echo "<td id='$countfilas'> $countfilas</td><td>";
+            echo "<td>";
+            echo $fila['locacion'] . "</td><td>";
+            echo $fila['departamento'] . "</td><td>";
+            echo $fila['puesto'] . "</td><td>";
+            echo $fila['nombre'] . "</td><td>";
+            echo $fila['exten'] . "</td><td>";
+            echo $fila['telefono'] . "</td>";
+            echo "</tr>";
+        }
+        echo "</tbody></table>";
+    }
+    mysqli_close($conexion);
+}
+
 function btn_buscar(){
   $output ='<FORM method=GET action="index" method="get"> '
   .'<INPUT TYPE=text id="busqueda" name="busqueda" value="" size="25" /> '
@@ -11,7 +70,8 @@ function btn_buscar(){
   echo $output;
   }
 
-function btn_nuevo(){
+
+  function btn_nuevo(){
   $nuevo='<form action="nuevo" method="get">'
                 . '<input type="submit" name="new_extension" value="Nueva Extension">'
                 . '</form>'
@@ -182,7 +242,7 @@ function correo($sugerencia, $ubicacion, $ext, $nombre=null, $depto=null, $puest
 	$subject = "Dir telefonico - solicito se ".$sugerencia." Ext ".$ext;
 	$headers = "From: directorio" . "\r\n" . "Reply-To: ".$correo .", amercado@sunset.com.mx, odzul@sunset.com.mx";
  
-mail($to, $subject, $message, $headers);
+    mail($to, $subject, $message, $headers);
 }
 
 function alertar($ubicacion, $ext, $nombre, $comentarios=null, $correo=null ){
@@ -197,68 +257,10 @@ function alertar($ubicacion, $ext, $nombre, $comentarios=null, $correo=null ){
 	$subject = $comentarios;
 	$headers = "From: directorio" . "\r\n" . "Reply-To: ".$correo;
  
-mail($to, $subject, $message, $headers);
+    mail($to, $subject, $message, $headers);
 }
 
 //Esta funcion sólo muestra el directorio, sin mostrar los botones de edicion
-function lista_completa($filtro = NULL) {
-    require("conexion.php");
-    if ($filtro <> NULL) {
-        echo 'Consulta con filtro <br>' . $filtro . "<br>";
-        $consulta = "SELECT Departamento, Puesto, Nombre, ext, telefono, Locacion "
-                . "FROM directorio "
-                . "WHERE Departamento LIKE %'$filtro'% or Locacion like %'$filtro'%"
-                . "ORDER BY directorio.Locacion DESC";
-        echo $consulta;
-        echo mysqli_errno($conexion);
-    } else {
-        //echo 'Consulta SIN filtro<br>';
-        $consulta = "SELECT Departamento, Puesto, Nombre, ext, telefono, Locacion "
-                . "FROM directorio "
-                . "ORDER BY Locacion DESC";
-
-        //echo "<br><br> $consulta <br><br>";
-    }
-    $resultado = mysqli_query($conexion, $consulta);
-    if ($resultado == false) {
-        # code...
-        echo "No se ejecutó la consulta <br>";
-        echo mysqli_errno($conexion);
-    } else {
-        $countfilas = 0;
-        echo '<table class="table table-striped table-hover" id="id01">';
-		echo '</thead>';
-        echo "<tr>";
-        //echo '<th>Id</th>';
-		echo '<th>Locación</th>';
-        echo '<th>Departamento</th>';
-        echo '<th>Puesto</th>';
-        echo '<th>Nombre</th>';
-        echo '<th>Ext</th>';
-        echo '<th>Telefono</th>';
-        
-        //echo "<th>Complejo</th>";
-		echo '</thead>';
-        echo "</tr><tbody>";
-		
-        while (($fila = mysqli_fetch_array($resultado, MYSQL_ASSOC)) == true) {
-            $countfilas++;
-            echo '<tr class="item">';
-            //echo "<td id='$countfilas'> $countfilas</td><td>";
-			echo "<td>";
-			echo $fila['Locacion'] . "</td><td>";
-            echo $fila['Departamento'] . "</td><td>";
-            echo $fila['Puesto'] . "</td><td>";
-            echo $fila['Nombre'] . "</td><td>";
-            echo $fila['ext'] . "</td><td>";
-            echo $fila['telefono'] . "</td>";
-            
-            echo "</tr>";
-        }
-        echo "</tbody></table>";
-    }
-    mysqli_close($conexion);
-}
 
 //Muestra los botones de editar en cada campo
 function lista_completa2($hotel = NULL, $departamento = NULL) {

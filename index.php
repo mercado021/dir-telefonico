@@ -55,7 +55,7 @@ include('functions/conexion.php');
 					</form>
 					<div class="navbar-right btn-pading-right">
 						<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#myModal"> Sugerir cambio</button>
-						<a class="btn btn-info navbar-btn" href="edit" role="button">Editar </a>
+						<a class="btn btn-info navbar-btn" href="edit.php" role="button">Editar </a>
 						<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#myModal2">Responsabilidad</button>
 							<a class="btn btn-success navbar-btn dropdown-toggle" data-toggle="dropdown" href="#dropdown-menu">Locaciones
 							</a>
@@ -197,7 +197,7 @@ include('functions/conexion.php');
 							  <p class="text-muted"></p>
 							</div>
 							<div class="modal-body">
-								<form action='mail' method='post'>
+								<form action='mail.php' method='post'>
 									<h4>Cual es tu correo?</h4>
 									<div class="form-group">
 										<div class="input-group">
