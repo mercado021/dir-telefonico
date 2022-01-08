@@ -1,8 +1,6 @@
 	<?php
-include('functions/conexion.php');
+		include('functions/conexion.php');
 	?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +13,7 @@ include('functions/conexion.php');
 		<script src="<?php echo $url?>lib/jquery-3.2.1.js"></script>
         <script src="<?php echo $url?>lib/w3.js"></script>
         <script src="<?php echo $url?>bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="<?php echo $url?>bootstrap-3.3.7-dist/css/bootstrap.min.css">
+		<link rel="stylesheet" href="<?php echo $url?>bootstrap-3.3.7-dist/css/bootstrap.min.css" />
         <style>
 			#menus {
 				position: fixed;
@@ -44,8 +42,8 @@ include('functions/conexion.php');
         </style>
     </head>
     <body>
-		<nav class="navbar navbar-fixed-top">
-			<div class="container-fluid">
+		
+			<div class="container-fluid navbar navbar-fixed-top">
 				<div class="row bg-primary">
 					<h1 class="text-center">Directorio Sunset</h1>
 				</div>
@@ -75,7 +73,7 @@ include('functions/conexion.php');
 					</div>
 				</div>
 			</div>	
-		</nav>
+	
 		<div class="row container-fluid top-pading">
 				<div id="left-bar" class="col-xs-2 " >
 					<!--<form  action='index' method='post'> -->

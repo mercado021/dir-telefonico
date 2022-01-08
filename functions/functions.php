@@ -61,6 +61,83 @@ function lista_completa($filtro = NULL) {
     mysqli_close($conexion);
 }
 
+//Muestra los botones de editar pero no la columna de seleccionar.
+function lista_completa3($hotel = NULL, $departamento = NULL) {
+    require("conexion.php");
+    $consulta = "SELECT id, departamento, puesto, nombre, exten, telefono, locacion "
+              . "FROM dir_general "
+              . "ORDER BY `dir_general`.`locacion`";
+    
+    $resultado = mysqli_query($conexion, $consulta);
+    $encabezado = '';
+    $tabla = '';
+    $tabla .= '<table  class="table table-striped" id="id01">
+				<thead><form action="#" method="post">
+                <th>Locacion</th>
+                <th>Departamento</th>
+                <th >Puesto</th>
+                <th >Nombre</th>
+                <th>Ext</th>
+                <th>Telefono</th>
+                <th >Edit</th>
+				</thead><tbody>'
+        ;
+    while (($fila = mysqli_fetch_array($resultado, MYSQL_ASSOC)) == true) {
+        $tabla .= '<tr class="item">
+					<td>' . $fila['locacion'] . '</td>
+					<td>' . $fila['departamento'] . '</td>
+					<td>' . $fila['puesto'] . '</td>
+					<td>' . $fila['nombre'] . '</td>
+					<td>' . $fila['exten'] . '</td>
+					<td>' . $fila['telefono'] . '</td>
+					<td style="width:60px;">
+						<button type="button" style="width:55px;" id="editar" onclick="location.href = \'edita.php?edita_fila='.$fila['id'].'\'">Edita</button>
+						<button type="button" style="width:55px;" id="borrar" onclick="confirmar('.$fila['id'].')">Borrar</button>
+					</td>
+                </tr>';
+				
+    }
+	
+    $tabla .= '</tbody></form>
+	</table>';
+    echo $encabezado;
+    echo $tabla;
+}
+
+//PENDIENTE: REVISAR POR QUE NO MANDA MAILS//
+function correo($sugerencia, $ubicacion, $ext, $nombre=null, $depto=null, $puesto=null, $nodirecto=null, $comentario=null, $correo=null ){
+	
+    $to = "amercado@sunset.com.mx,odzul@sunset.com.mx";
+	$message = "
+	Por medio de la presente solicito se ".$sugerencia." la Extension ".$ext." con los siguientes datos. " ."\r\n". "
+	Ubicacion: ".$ubicacion." " ."\r\n". "
+	Nombre: ".$nombre." " ."\r\n". "
+	Departamento: ".$depto." " ."\r\n". "
+	Puesto: ".$puesto." " ."\r\n". "
+	No. Directo: ".$nodirecto." " ."\r\n". "
+	Comentario Adicional:" ."\r\n". " ".$comentario." 
+	";
+	$subject = "Dir telefonico - solicito de ".$sugerencia." Ext ".$ext;
+	$headers = "From: directorio" . "\r\n" . "Reply-To: ".$correo;
+ 
+    mail($to, $subject, $message, $headers);
+}
+
+function alertar($ubicacion, $ext, $nombre, $comentarios=null, $correo=null ){
+	
+	$to = "dx82o7f45p@pomail.net,amercado@sunset.com.mx";
+	$message = "
+	Error en  " .$ubicacion."\r\n". "
+	Comentario:" ."\r\n". " ".$comentarios."
+	Reporta: ".$nombre." " ."\r\n". "
+	Ext: ".$ext." " ."\r\n". "
+	";
+	$subject = $comentarios;
+	$headers = "From: directorio" . "\r\n" . "Reply-To: ".$correo;
+ 
+    mail($to, $subject, $message, $headers);
+}
+
 function btn_buscar(){
   $output ='<FORM method=GET action="index" method="get"> '
   .'<INPUT TYPE=text id="busqueda" name="busqueda" value="" size="25" /> '
@@ -227,38 +304,9 @@ function menu_departamento($hotel = null, $foco = null) {
     echo $output;
 }
 
-function correo($sugerencia, $ubicacion, $ext, $nombre=null, $depto=null, $puesto=null, $nodirecto=null, $comentario=null, $correo=null ){
-	
-	$to = "amercado@sunset.com.mx,odzul@sunset.com.mx";
-	$message = "
-	Por medio de la presente solicito se ".$sugerencia." la Extension ".$ext." con los siguientes datos. " ."\r\n". "
-	Ubicacion: ".$ubicacion." " ."\r\n". "
-	Nombre: ".$nombre." " ."\r\n". "
-	Departamento: ".$depto." " ."\r\n". "
-	Puesto: ".$puesto." " ."\r\n". "
-	No. Directo: ".$nodirecto." " ."\r\n". "
-	Comentario Adicional:" ."\r\n". " ".$comentario." 
-	";
-	$subject = "Dir telefonico - solicito se ".$sugerencia." Ext ".$ext;
-	$headers = "From: directorio" . "\r\n" . "Reply-To: ".$correo .", amercado@sunset.com.mx, odzul@sunset.com.mx";
- 
-    mail($to, $subject, $message, $headers);
-}
 
-function alertar($ubicacion, $ext, $nombre, $comentarios=null, $correo=null ){
-	
-	$to = "dx82o7f45p@pomail.net,amercado@sunset.com.mx";
-	$message = "
-	Error en  " .$ubicacion."\r\n". "
-	Comentario:" ."\r\n". " ".$comentarios."
-	Reporta: ".$nombre." " ."\r\n". "
-	Ext: ".$ext." " ."\r\n". "
-	";
-	$subject = $comentarios;
-	$headers = "From: directorio" . "\r\n" . "Reply-To: ".$correo;
- 
-    mail($to, $subject, $message, $headers);
-}
+
+
 
 //Esta funcion sólo muestra el directorio, sin mostrar los botones de edicion
 
@@ -338,48 +386,7 @@ function lista_completa2($hotel = NULL, $departamento = NULL) {
     echo $tabla;
 }
 
-//Muestra los botones de editar pero no la columna de seleccionar.
-function lista_completa3($hotel = NULL, $departamento = NULL) {
-    require("conexion.php");
-    $consulta = "SELECT id, Departamento, Puesto, Nombre, ext, telefono, Locacion "
-              . "FROM directorio "
-              . "ORDER BY `directorio`.`Locacion`";
-    
-    $resultado = mysqli_query($conexion, $consulta);
-    $encabezado = '';
-    $tabla = '';
-    $tabla .= '<table  class="table table-striped" id="id01">
-				<thead><form action="#" method="post">
-                <th>Locacion</th>
-                <th>Departamento</th>
-                <th >Puesto</th>
-                <th >Nombre</th>
-                <th>Ext</th>
-                <th>Telefono</th>
-                <th >Edit</th>
-				</thead><tbody>'
-        ;
-    while (($fila = mysqli_fetch_array($resultado, MYSQL_ASSOC)) == true) {
-        $tabla .= '<tr class="item">
-					<td>' . $fila['Locacion'] . '</td>
-					<td>' . $fila['Departamento'] . '</td>
-					<td>' . $fila['Puesto'] . '</td>
-					<td>' . $fila['Nombre'] . '</td>
-					<td>' . $fila['ext'] . '</td>
-					<td>' . $fila['telefono'] . '</td>
-					<td style="width:60px;">
-						<button type="button" style="width:55px;" id="editar" onclick="location.href = \'edita?edita_fila='.$fila['id'].'\'">Edita</button>
-						<button type="button" style="width:55px;" id="borrar" onclick="confirmar('.$fila['id'].')">Borrar</button>
-					</td>
-                </tr>';
-				
-    }
-	
-    $tabla .= '</tbody></form>
-	</table>';
-    echo $encabezado;
-    echo $tabla;
-}
+
 
 
 function listaporhotel($hotel="M4SG", $filtro = NULL) {
@@ -857,7 +864,7 @@ function inserta($locacion, $depto, $puesto, $nombre, $ext, $tele) {
 
 function borrar($id) {
     require("conexion.php");
-    $consulta = "DELETE FROM `directorio` "
+    $consulta = "DELETE FROM `dir_general` "
             . "WHERE id = {$id}"
     ;
     $resultado = mysqli_query($conexion, $consulta);
