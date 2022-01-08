@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <title>Directorio Sunset</title>
+	<head>
+		<meta charset="utf-8">
+		<title>Directorio Sunset</title>
 		<link rel="icon" type="image/png" href="favicon.png" />
-        <script src="https://www.w3schools.com/lib/w3.js"></script>
+		<script src="https://www.w3schools.com/lib/w3.js"></script>
 		<script src="<?php echo $url?>lib/jquery-3.2.1.js"></script>
-        <script src="<?php echo $url?>lib/w3.js"></script>
-        <script src="<?php echo $url?>bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+		<script src="<?php echo $url?>lib/w3.js"></script>
+		<script src="<?php echo $url?>bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="<?php echo $url?>bootstrap-3.3.7-dist/css/bootstrap.min.css" />
-        <style>
+		<style>
 			#menus {
 				position: fixed;
 			}
@@ -36,82 +36,82 @@
 			.main-menu{
 				background-color: #4E6084;
 			}
-			 body {
+				body {
 			position: relative; 
 		}
-        </style>
-    </head>
+		</style>
+	</head>
     <body>
 		
-			<div class="container-fluid navbar navbar-fixed-top">
-				<div class="row bg-primary">
-					<h1 class="text-center">Directorio Sunset</h1>
-				</div>
-				<div class='row main-menu'>
-					<form class="navbar-form navbar-left">
-						<input type="text" class=" form-control" oninput="w3.filterHTML('#id01', '.item', this.value)" placeholder="A quien estás buscando?">							
-					</form>
-					<div class="navbar-right btn-pading-right">
-						<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#myModal"> Sugerir cambio</button>
-						<a class="btn btn-info navbar-btn" href="edit.php" role="button">Editar </a>
-						<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#myModal2">Responsabilidad</button>
-							<a class="btn btn-success navbar-btn dropdown-toggle" data-toggle="dropdown" href="#dropdown-menu">Locaciones
-							</a>
+		<div class="container-fluid navbar navbar-fixed-top">
+			<div class="row bg-primary">
+				<h1 class="text-center">Directorio Sunset</h1>
+			</div>
+			<div class='row main-menu'>
+				<form class="navbar-form navbar-left">
+					<input type="text" class=" form-control" oninput="w3.filterHTML('#id01', '.item', this.value)" placeholder="A quien estás buscando?">							
+				</form>
+				<div class="navbar-right btn-pading-right">
+					<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#myModal"> Sugerir cambio</button>
+					<a class="btn btn-info navbar-btn" href="edit.php" role="button">Editar </a>
+					<button class="btn btn-info navbar-btn" data-toggle="modal" data-target="#myModal2">Responsabilidad</button>
+						<a class="btn btn-success navbar-btn dropdown-toggle" data-toggle="dropdown" href="#dropdown-menu">Locaciones
+						</a>
 
-							<ul class="dropdown-menu">
-							  <li><a href="/?hotel=all">Todos</a></li>
-							  <li><a href="/?hotel=sr">Sunset Royal</a></li>
-							  <li><a href="/?hotel=sm">Sunset Marina</a></li>
-							  <li><a href="/?hotel=sf">Sunset Fisherman</a></li>
-							  <li><a href="/?hotel=h3r">Hacienda Tres Rios</a></li>
-							  <li><a href="/?hotel=os">Ocean Spa</a></li>
-							  <li><a href="/?hotel=ls">Laguna Suites</a></li>
-							  <li><a href="/?hotel=sc">Servicenter</a></li>
-							  <li><a href="/?hotel=ph">Plaza Hacienda</a></li>
-							  <li><a href="/?hotel=pm">Plaza Mayafair</a></li>
-							</ul>
-					</div>
+						<ul class="dropdown-menu">
+							<li><a href="/?hotel=all">Todos</a></li>
+							<li><a href="/?hotel=sr">Sunset Royal</a></li>
+							<li><a href="/?hotel=sm">Sunset Marina</a></li>
+							<li><a href="/?hotel=sf">Sunset Fisherman</a></li>
+							<li><a href="/?hotel=h3r">Hacienda Tres Rios</a></li>
+							<li><a href="/?hotel=os">Ocean Spa</a></li>
+							<li><a href="/?hotel=ls">Laguna Suites</a></li>
+							<li><a href="/?hotel=sc">Servicenter</a></li>
+							<li><a href="/?hotel=ph">Plaza Hacienda</a></li>
+							<li><a href="/?hotel=pm">Plaza Mayafair</a></li>
+						</ul>
 				</div>
-			</div>	
+			</div>
+		</div>	
 	
 		<div class="row container-fluid top-pading">
 				<div id="left-bar" class="col-xs-2 " >
 					<!--<form  action='index' method='post'> -->
 						<fieldset>
-						<div  class="form-group">
-							<legend>Marcación entre hoteles </legend>
-							<p>Me encuentro en: </p>
-							<select class="form-control" name="origen" id="origen" required>
-								<option disabled selected value> ------ </option>
-								<option value="Sunset Royal">Royal Sunset</option>
-								<option value="Hacienda tres rios">Hacienda tres rios</option>
-								<option value="Ocean Spa">Ocean Spa</option>
-								<option value="Sunset Marina">Sunset Marina</option>
-								<option value="Admiral Yacht Club">Admiral Yacht Club</option>
-								<option value="Sunset Fisherman">Fisherman</option>
-								<option value="Laguna Suites">Laguna Suites</option>
-								<option value="Plaza Hacienda">Plaza Hacienda (M4SG)</option>
-								<option value="Plaza Mayafair">Plaza Mayafair</option>
-								<option value="Servicenter">Servicenter</option>
-							</select>
-							<br>
-							<p>Quiero marcar a: </p>
-							<select class="form-control" name="destino" id="destino" required><br>
-								<option disabled selected value> ------ </option>
-								<option value="Sunset Royal">Royal Sunset</option>
-								<option value="Hacienda tres rios">Hacienda tres rios</option>
-								<option value="Ocean Spa">Ocean Spa</option>
-								<option value="Sunset Marina">Sunset Marina</option>
-								<option value="Admiral Yacht Club">Admiral Yacht Club</option>
-								<option value="Sunset Fisherman">Fisherman</option>
-								<option value="Plaza Hacienda">Plaza Hacienda (M4SG)</option>
-								<option value="Plaza Mayafair">Plaza Mayafair</option>
-								<option value="Servicenter">Servicenter</option>
-								<option value="Laguna Suites directo">Laguna Suites - Directo</option>
-								<option value="Hacienda tres rios directo">Hacienda tres rios - Directo</option>
-								<option value="Ocean Spa directo">Ocean Spa - Directo</option>
-								<option value="Admiral Yacht Club Directo">Admiral Yacht Club - Directo </option>
-							</select>
+							<div  class="form-group">
+								<legend>Marcación entre hoteles </legend>
+								<p>Me encuentro en: </p>
+								<select class="form-control" name="origen" id="origen" required>
+									<option disabled selected value> ------ </option>
+									<option value="Sunset Royal">Royal Sunset</option>
+									<option value="Hacienda tres rios">Hacienda tres rios</option>
+									<option value="Ocean Spa">Ocean Spa</option>
+									<option value="Sunset Marina">Sunset Marina</option>
+									<option value="Admiral Yacht Club">Admiral Yacht Club</option>
+									<option value="Sunset Fisherman">Fisherman</option>
+									<option value="Laguna Suites">Laguna Suites</option>
+									<option value="Plaza Hacienda">Plaza Hacienda (M4SG)</option>
+									<option value="Plaza Mayafair">Plaza Mayafair</option>
+									<option value="Servicenter">Servicenter</option>
+								</select>
+								<br>
+								<p>Quiero marcar a: </p>
+								<select class="form-control" name="destino" id="destino" required><br>
+									<option disabled selected value> ------ </option>
+									<option value="Sunset Royal">Royal Sunset</option>
+									<option value="Hacienda tres rios">Hacienda tres rios</option>
+									<option value="Ocean Spa">Ocean Spa</option>
+									<option value="Sunset Marina">Sunset Marina</option>
+									<option value="Admiral Yacht Club">Admiral Yacht Club</option>
+									<option value="Sunset Fisherman">Fisherman</option>
+									<option value="Plaza Hacienda">Plaza Hacienda (M4SG)</option>
+									<option value="Plaza Mayafair">Plaza Mayafair</option>
+									<option value="Servicenter">Servicenter</option>
+									<option value="Laguna Suites directo">Laguna Suites - Directo</option>
+									<option value="Hacienda tres rios directo">Hacienda tres rios - Directo</option>
+									<option value="Ocean Spa directo">Ocean Spa - Directo</option>
+									<option value="Admiral Yacht Club Directo">Admiral Yacht Club - Directo </option>
+								</select>
 							</div>
 							<input class="btn btn-default" type="submit" name="enviando" onclick="ajax_post();" value="¿Cómo marco?">
 						</fieldset> 
