@@ -1,53 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Directorio Sunset</title>
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-		
-		
-        <script src="https://www.w3schools.com/lib/w3.js"></script>
-		<script src="/lib/jquery-3.2.1"></script>
-        <script src="/lib/w3.js"></script>
-        <script src="/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" href="/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-		
-		
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <style>
-		header{
-background:#2c3e50;
-color:#fff;
-}
-        </style>
-    </head>
+	<head>
+			<meta charset="utf-8">
+			<title>Directorio Sunset</title>
+			<link rel="icon" type="image/png" href="favicon.png" />
+			<script src="<?php echo $url?>lib/jquery-3.2.1.js"></script>
+			<script src="<?php echo $url?>lib/w3.js"></script>
+			<script src="<?php echo $url?>bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+			<link rel="stylesheet" href="<?php echo $url?>bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+			<style>
+				#menus {
+					position: fixed;
+				}
+				.head{
+					position: fixed;
+					background-color:black;
+					z-index: 1001;
+				}
+				.sidenav {
+					position: fixed;
+					
+				}
+				.top-pading{
+					padding-top:120px;
+					}
+				.btn-pading-right{
+					padding-right: 30px;
+				}
+				.main-menu{
+					background-color: #4E6084;
+				}
+					body {
+				position: relative; 
+			}
+				</style>
+	</head>
     <body>
         
-        <div class="container">
-          <div class="row bg-primary">
-			<div class="col-md-2"></div>
-			<header>
-				<div class="col-md-5">
-					<h1>Directorio Sunset</h1>
-				</div>
-				
-				<div class="col-md-4">
-					<br> 
-          
-				</div>
-			</header>
+        <div class="container-fluid">
+		<div class="row bg-primary">
+			<div >
+				<h1 class="text-center">Directorio Sunset</h1>
+			</div>			
+		</div>	
+		<div class='row main-menu'>
+			<div class="navbar-right btn-pading-right">
+				<a class="btn btn-info navbar-btn" href="edit.php" role="button">Regresar </a>
 			</div>
+		</div>
 			<div class="row">
+				<div class="col-xs-4"></div>
+				
 			<?php
 				require 'functions/conexion.php';
 				require 'functions/functions.php';
@@ -62,6 +64,8 @@ color:#fff;
 					Header( "Location: edit.php");
 				}
 				?>
+				
+				
 			
 			</div>
 		</div>

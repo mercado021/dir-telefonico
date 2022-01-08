@@ -138,6 +138,140 @@ function alertar($ubicacion, $ext, $nombre, $comentarios=null, $correo=null ){
     mail($to, $subject, $message, $headers);
 }
 
+function editar($fila = NULL) {
+    require("conexion.php");
+    
+    if ($fila == NULL) {
+      # code...
+      //entra en esta parte del IF cuando se va a Insertar nueva extension
+      //echo "edito sin filtro";
+      $consulta = "SELECT Departamento "
+				. "FROM directorio "
+              //. "WHERE id='$fila' "
+      ;
+      $resultado = mysqli_query($conexion, $consulta);
+      $resultado = mysqli_fetch_array($resultado, MYSQL_ASSOC);
+     // $select = selectbox_depto($resultado['Locacion']);
+      $locacion= selectbox_location();
+      $depto = selectbox_depto();
+
+      $output = '';
+      $output .= "<table class=\"form-group row\">"
+              . '<form action="nuevo.php" method="get">'
+                ."<div class=\"form-group col-xs-4\">"
+                  . "<labe>Locacion</labe>"
+                  . '<select class="form-control" name="locacion">'. $locacion .'</select>' 
+                  . "<labe>Departamento</labe>"
+                  . '<input class="form-control" pattern="[a-zA-Z0-9]{,20}" type="text" name="depto" value="">'   
+                  . "<labe>Puesto</labe>"
+                  . '<input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="puesto" value="">'   
+                  . "<labe>Nombre</labe>"
+                  . '<input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="nombre" value="">'  
+                  . "<labe>Extension</labe>"
+                  . '<input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="ext" value="">'   
+                  . "<labe>Telefono</labe>"
+                  . '<input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="telefono" value="">'   
+
+                  . '<input class="btn btn-success" type="submit" name="nueva_ext" value="Agregar">'
+                  ."</div>"
+                  ."</form>"
+      ;
+      echo $output;
+    }
+	else {
+      # code...
+      //echo "edito con filtro";
+      $consulta = "SELECT * "
+              . "FROM dir_general "
+              . "WHERE id='$fila' "
+      ;
+      $resultado = mysqli_query($conexion, $consulta);
+      $resultado = mysqli_fetch_array($resultado, MYSQL_ASSOC);
+     // $select = selectbox_depto($resultado['Locacion']);
+      $selectbox = selectbox_depto_autofoco($resultado['locacion'],$resultado['departamento']);
+
+      $output = '';
+      $output .= ""
+        ."<table class=\"table table-striped\">"
+            . '<form action="edita.php" method="get">'
+                . "<tr>"
+                    . "<th>Locacion</th>"
+                    . '<td><input class="form-control" disabled type="text" name="locacion" value="' . $resultado['locacion'] . '"></td>'
+                . "<tr>"
+                    . "<th>Departamento</th>"
+                    . '<td> <select class="form-control"  name="depto">'. $selectbox .'</select></td>'
+                . "</tr>"
+                . "<tr>"
+                    . "<th>Puesto</th>"
+                    . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="puesto" value="' . $resultado['puesto'] . '"></td>'
+                . "</tr>"
+                . "<tr>"
+                    . "<th>Nombre</th>"
+                    . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="nombre" value="' . $resultado['nombre'] . '"></td>'
+                . "</tr>"
+                . "<tr>"
+                    . "<th>Extension</th>"
+                    . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="ext" value="' . $resultado['exten'] . '"></td>'
+                . "</tr>"
+                . "<tr>"
+                    . "<th>Telefono</th>"
+                    . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="telefono" value="' . $resultado['telefono'] . '"></td>'
+                . "</tr>"
+                . "<tr>"
+                    . '<input type="hidden" name="id" value="' . $resultado['id'] . '">'
+                    . '<input type="hidden" name="locacion" value="' . $resultado['locacion'] . '">'
+                . "</tr>"
+                . '<tr>'
+                    . '<td colspan=6><input class="btn btn-success" type="submit" name="actualiza" value="actualiza"></td>'
+                . '</tr>'
+            ."</form>
+        </table>"
+      ;
+      echo $output;
+    }
+    
+}
+
+function inserta($locacion, $depto, $puesto, $nombre, $ext, $tele) {
+    require("conexion.php");
+    $consulta = "INSERT INTO `dir_general` "
+            . "(`departamento`, `exten`, `telefono`, `nombre`, `puesto`,"
+            . "`locacion`) "
+            . "VALUES ('$depto','$ext','$tele','$nombre','$puesto','$locacion')"
+    ;
+    $resultado = mysqli_query($conexion, $consulta);
+    if (mysqli_connect_errno($resultado)) {
+        # code...
+        echo "Hubo un error al ingresar el registro";
+        exit();
+    } else {
+        echo $consulta . "<br>";
+        //printf("Affected rows (SELECT): %d\n", mysqli_affected_rows($conexion));
+    }
+}
+
+function actualiza($id, $locacion, $depto, $puesto, $nombre, $ext, $tele) {
+    require("conexion.php");
+    $consulta = "UPDATE `dir_general` "
+            . "SET `locacion` = '$locacion', "
+            . "`departamento` = '$depto', "
+            . "`puesto` = '$puesto', "
+            . "`nombre` = '$nombre', "
+            . "`exten` = '$ext', "
+            . "`telefono` = '$tele' "
+            . "WHERE `id` = '$id'"
+    ;
+    $resultado = mysqli_query($conexion, $consulta);
+    if (mysqli_connect_errno($resultado)) {
+        # code...
+        echo "Hubo un error al editar el registro";
+        exit();
+    } else {
+        echo $consulta . "<br>";
+        printf("Affected rows (SELECT): %d\n", mysqli_affected_rows($conexion));
+    }
+}
+
 function btn_buscar(){
   $output ='<FORM method=GET action="index" method="get"> '
   .'<INPUT TYPE=text id="busqueda" name="busqueda" value="" size="25" /> '
@@ -652,90 +786,7 @@ function select($hotel = NULL, $departamento = NULL) {
     echo $tabla;
 }
 
-function editar($fila = NULL) {
-    require("conexion.php");
-    if ($fila == NULL) {
-      # code...
-      //entra en esta parte del IF cuando se va a Insertar nueva extension
-      //echo "edito sin filtro";
-      $consulta = "SELECT Departamento "
-				. "FROM directorio "
-              //. "WHERE id='$fila' "
-      ;
-      $resultado = mysqli_query($conexion, $consulta);
-      $resultado = mysqli_fetch_array($resultado, MYSQL_ASSOC);
-     // $select = selectbox_depto($resultado['Locacion']);
-      $locacion= selectbox_location();
-      $depto = selectbox_depto();
 
-      $output = '';
-      $output .= "<table class=\"table table-striped\">"
-              . '<form action="nuevo" method="get">'
-              . "<tr>"
-                  . "<th>Locacion</th>"
-                  . "<th>Departamento</th>"
-                  . "<th>Puesto</th>"
-                  . "<th>Nombre</th>"
-                  . "<th>Extension</th>"
-                  . "<th>Telefono</th>"
-              . "</tr>"
-              . "<tr>"
-                  . '<td> <select class="form-control" name="locacion">'. $locacion .'</select></td>'
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9]{,20}" type="text" name="depto" value=""></td>'
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="puesto" value=""></td>'
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="nombre" value=""></td>'
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="ext" value=""></td>'
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="telefono" value=""></td>'
-              . "</tr>"
-              . '<tr>'
-                   . '<td colspan=6><input type="submit" name="nueva_ext" value="Agrega"></td>'
-              . '</tr>'
-      ;
-      $output .= "</form></table>";
-      echo $output;
-    }
-	else {
-      # code...
-      $consulta = "SELECT * "
-              . "FROM directorio "
-              . "WHERE id='$fila' "
-      ;
-      $resultado = mysqli_query($conexion, $consulta);
-      $resultado = mysqli_fetch_array($resultado, MYSQL_ASSOC);
-     // $select = selectbox_depto($resultado['Locacion']);
-      $selectbox = selectbox_depto_autofoco($resultado['Locacion'],$resultado['Departamento']);
-
-      $output = '';
-      $output .= "<table class=\"table table-striped\">"
-              . '<form action="edita" method="get">'
-              . "<tr>"
-                  . "<th>Locacion</th>"
-                  . "<th>Departamento</th>"
-                  . "<th>Puesto</th>"
-                  . "<th>Nombre</th>"
-                  . "<th>Extension</th>"
-                  . "<th>Telefono</th>"
-              . "</tr>"
-              . "<tr>"
-                  . '<input type="hidden" name="id" value="' . $resultado['id'] . '">'
-                  . '<input type="hidden" name="locacion" value="' . $resultado['Locacion'] . '">'
-                  . '<td><input class="form-control" disabled type="text" name="locacion" value="' . $resultado['Locacion'] . '"></td>'
-                  //. '<td><input type="text" name="depto" value="' . $resultado['Departamento'] . '"></td>'
-                  . '<td> <select class="form-control"  name="depto">'. $selectbox .'</select></td>'
-                  //selectbox_depto
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="puesto" value="' . $resultado['Puesto'] . '"></td>'
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="nombre" value="' . $resultado['Nombre'] . '"></td>'
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="ext" value="' . $resultado['ext'] . '"></td>'
-                  . '<td><input class="form-control" pattern="[a-zA-Z0-9].{1,40}|.{}" type="text" name="telefono" value="' . $resultado['telefono'] . '"></td>'
-              . "</tr>"
-              . '<tr>'
-                   . '<td colspan=6><input class="btn btn-default" type="submit" name="actualiza" value="actualiza"></td>'
-              . '</tr>'
-      ;
-      $output .= "</form></table>";
-      echo $output;
-    }
-}
 
 //función editar2 sólo fue una copia por si todo fallaba al editar la funcion original
 //se puede borrar si ya todo jala bien con la funcion editar()
@@ -822,45 +873,9 @@ function editar2($fila = NULL) {
       echo $output;
     }
 }
-function actualiza($id, $locacion, $depto, $puesto, $nombre, $ext, $tele) {
-    require("conexion.php");
-    $consulta = "UPDATE `directorio` "
-            . "SET `Locacion` = '$locacion', "
-            . "`Departamento` = '$depto', "
-            . "`Puesto` = '$puesto', "
-            . "`Nombre` = '$nombre', "
-            . "`ext` = '$ext', "
-            . "`telefono` = '$tele' "
-            . "WHERE `directorio`.`id` = '$id'"
-    ;
-    $resultado = mysqli_query($conexion, $consulta);
-    if (mysqli_connect_errno($resultado)) {
-        # code...
-        echo "Hubo un error al editar el registro";
-        exit();
-    } else {
-        echo $consulta . "<br>";
-        printf("Affected rows (SELECT): %d\n", mysqli_affected_rows($conexion));
-    }
-}
 
-function inserta($locacion, $depto, $puesto, $nombre, $ext, $tele) {
-    require("conexion.php");
-    $consulta = "INSERT INTO `directorio` "
-            . "(`Departamento`, `ext`, `telefono`, `Nombre`, `Puesto`,"
-            . "`Locacion`) "
-            . "VALUES ('$depto','$ext','$tele','$nombre','$puesto','$locacion')"
-    ;
-    $resultado = mysqli_query($conexion, $consulta);
-    if (mysqli_connect_errno($resultado)) {
-        # code...
-        echo "Hubo un error al ingresar el registro";
-        exit();
-    } else {
-        echo $consulta . "<br>";
-        //printf("Affected rows (SELECT): %d\n", mysqli_affected_rows($conexion));
-    }
-}
+
+
 
 function borrar($id) {
     require("conexion.php");
