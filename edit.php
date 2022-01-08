@@ -71,9 +71,7 @@ include('functions/conexion.php');
 			</div>
 		</div>
 	</div>	
-			
 
-		
 	<div class="container-fluid bg-warning top-pading col-xs-2">
 		
 			<div class="form-group">
@@ -126,10 +124,7 @@ include('functions/conexion.php');
 			// require 'functions/conexion.php';
 			lista_completa3();
 		?>
-	
 	</div>
-
-
 							<!-- Modal -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
