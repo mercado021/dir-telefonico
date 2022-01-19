@@ -108,8 +108,7 @@ function lista_completa3($hotel = NULL, $departamento = NULL) {
 function correo($sugerencia, $ubicacion, $ext, $nombre=null, $depto=null, $puesto=null, $nodirecto=null, $comentario=null, $correo=null ){
 	
     $to = "amercado@sunset.com.mx,odzul@sunset.com.mx";
-	$message = "
-	Por medio de la presente solicito se ".$sugerencia." la Extension ".$ext." con los siguientes datos. " ."\r\n". "
+	$message = "Por medio de la presente solicito se ".$sugerencia." la Extension ".$ext." con los siguientes datos. " ."\r\n". "
 	Ubicacion: ".$ubicacion." " ."\r\n". "
 	Nombre: ".$nombre." " ."\r\n". "
 	Departamento: ".$depto." " ."\r\n". "
@@ -438,10 +437,6 @@ function menu_departamento($hotel = null, $foco = null) {
     echo $output;
 }
 
-
-
-
-
 //Esta funcion sólo muestra el directorio, sin mostrar los botones de edicion
 
 //Muestra los botones de editar en cada campo
@@ -519,9 +514,6 @@ function lista_completa2($hotel = NULL, $departamento = NULL) {
     echo $encabezado;
     echo $tabla;
 }
-
-
-
 
 function listaporhotel($hotel="M4SG", $filtro = NULL) {
     require("conexion.php");
@@ -786,8 +778,6 @@ function select($hotel = NULL, $departamento = NULL) {
     echo $tabla;
 }
 
-
-
 //función editar2 sólo fue una copia por si todo fallaba al editar la funcion original
 //se puede borrar si ya todo jala bien con la funcion editar()
 function editar2($fila = NULL) {
@@ -875,8 +865,6 @@ function editar2($fila = NULL) {
 }
 
 
-
-
 function borrar($id) {
     require("conexion.php");
     $consulta = "DELETE FROM `dir_general` "
@@ -900,41 +888,43 @@ function f_busca_marcacion($origen,$destino){
 	if ($origen==$destino) {
 		# code...
 		echo "<b>Extension</b>";
-	}else{
-	$query_prefijo=mysqli_query($conexion,"select Prefijo from prefijos where Origen='$origen' && Destino='$destino'");
-	$prefijo=mysqli_fetch_array($query_prefijo,MYSQLI_ASSOC);
-	switch (true) {
-		case $prefijo['Prefijo']=="NA":
-			# code...
-		echo "<b>No puedes marcar a esta Ubicación</b>";
-			break;
-		case $prefijo['Prefijo']=="Ext.":
-			# code...
-		echo "<b>Extension</b>";
-			break;
-		case 
-		$prefijo['Prefijo']=="78483, (998) 891 5252" || 
-		$prefijo['Prefijo']=="*110 o bien (998) 287 4100" ||
-		$prefijo['Prefijo']=="(984) 877 2400" ||
-		$prefijo['Prefijo']=="(998) 848 7170" ||
-		$prefijo['Prefijo']=="6 + Ext, Alternativa: 3 + Ext"||
-		$prefijo['Prefijo']=="(998) 849 5317, (998) 849 5318":
-			# code...
-		echo "De ".$origen." ----> ".$destino ."<b>: ".$prefijo['Prefijo']."</b>";
-			break;
-		case
-		$prefijo['Prefijo']=="8 + EXT, Alternativa: 84444"||		
-		$prefijo['Prefijo']=="5 + Ext, Alternativa: 56666":
-		echo "De ".$origen." ----> ".$destino ."<b>: ".$prefijo['Prefijo']. "</b> Directo a Operadora";
-		break;
-	
-		default:
-			# code...
-		echo "De ".$origen." ----> ".$destino ."<b>: ".$prefijo['Prefijo']." + Ext.</b><br>";
-		//echo $select;
-			break;
 	}
-	mysqli_close($conexion);
+    else
+    {
+        $query_prefijo=mysqli_query($conexion,"select Prefijo from prefijos where Origen='$origen' && Destino='$destino'");
+        $prefijo=mysqli_fetch_array($query_prefijo,MYSQLI_ASSOC);
+        switch (true) {
+            case $prefijo['Prefijo']=="NA":
+                # code...
+            echo "<b>No puedes marcar a esta Ubicación</b>";
+                break;
+            case $prefijo['Prefijo']=="Ext.":
+                # code...
+            echo "<b>Extension</b>";
+                break;
+            case 
+            $prefijo['Prefijo']=="78483, (998) 891 5252" || 
+            $prefijo['Prefijo']=="*110 o bien (998) 287 4100" ||
+            $prefijo['Prefijo']=="(984) 877 2400" ||
+            $prefijo['Prefijo']=="(998) 848 7170" ||
+            $prefijo['Prefijo']=="6 + Ext, Alternativa: 3 + Ext"||
+            $prefijo['Prefijo']=="(998) 849 5317, (998) 849 5318":
+                # code...
+            echo "De ".$origen." ----> ".$destino ."<b>: ".$prefijo['Prefijo']."</b>";
+                break;
+            case
+            $prefijo['Prefijo']=="8 + EXT, Alternativa: 84444"||		
+            $prefijo['Prefijo']=="5 + Ext, Alternativa: 56666":
+            echo "De ".$origen." ----> ".$destino ."<b>: ".$prefijo['Prefijo']. "</b> Directo a Operadora";
+            break;
+        
+            default:
+                # code...
+            echo "De ".$origen." ----> ".$destino ."<b>: ".$prefijo['Prefijo']." + Ext.</b><br>";
+            //echo $select;
+                break;
+        }
+        mysqli_close($conexion);
 	}
 }
 ?>
